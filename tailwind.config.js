@@ -10,6 +10,7 @@ module.exports = {
   theme: {
     colors: {
       'blue': colors.blue,
+      'red': colors.red,
       'purple': colors.purple,
       'pink': colors.pink,
       'orange': colors.orange,
@@ -17,6 +18,7 @@ module.exports = {
       'yellow': colors.yellow,
       'gray': colors.gray,
       'white':colors.white,
+      'indigo':colors.indigo,
       'primary':'#008080',
       'secondary':'#F1C40F',
 

@@ -42,7 +42,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $registeredSince = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE,nullable: true)]
     private ?\DateTimeInterface $lastConnection = null;
 
     #[ORM\OneToMany(mappedBy: 'customer', targetEntity: Orders::class, orphanRemoval: true)]
