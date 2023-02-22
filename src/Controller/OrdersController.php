@@ -8,18 +8,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class OrdersController extends AbstractController
 {
-    #[Route('/orders', name: 'app_orders')]
+    #[Route('/orders', name: 'orders')]
     public function index(): Response
     {
         return $this->render('orders/index.html.twig', [
             'controller_name' => 'OrdersController',
         ]);
     }
-
-    public function uploadFile()
-    {
-        return $this->render('orders/index.html.twig',[
-
-        ]);
-    }
+    
 }
