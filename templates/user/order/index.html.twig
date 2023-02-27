@@ -1,0 +1,22 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Listes de mes commandes
+{% endblock %}
+
+
+{% block body %}
+
+    {% include "user/_nav.html.twig" %}
+
+	<div class="w-screen bg-gray-50">
+		<div class="mx-auto max-w-screen-xl px-2 py-10">
+			<h1 class="mt-2 ml-5 text-2xl font-bold text-gray-900">Listes des commandes</h1>
+			<div class="mt-6 overflow-hidden rounded-xl bg-white px-6 shadow lg:px-4">
+				{% include "user/order/_list.html.twig" %}
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}

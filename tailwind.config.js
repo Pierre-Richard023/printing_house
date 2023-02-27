@@ -8,6 +8,7 @@ module.exports = {
     "./assets/**/*.jsx",
     "./templates/**/*.html.twig",
   ],
+  darkMode: 'class',
   theme: {
     colors: {
 

@@ -33,7 +33,10 @@ const CardOptions = () => {
                                         <label className="flex w-full p-5 bg-white border border-gray-300 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-green-500 peer-checked:ring-2 peer-checked:border-transparent text-center"
                                             htmlFor={"option" + i}
                                         >
-                                            <p className="fw-bold" >{val.name}</p>
+                                            <div className="w-full text-center">
+                                                <h2 className='font-bold'>{val.name}</h2>
+                                                <p className='py-2'>{val.description}</p>
+                                            </div>
                                         </label>
                                     </li>
 

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>
+		Facture N°
+		{{ order.orderNumber }}
+	</title>
+
+	<style>
+		body {
+			position: relative;
+			width: 21cm;
+			height: 29.7cm;
+			margin: 0 auto;
+			color: #001028;
+			background: #FFFFFF;
+			font-family: Arial, sans-serif;
+			font-size: 12px;
+			font-family: Arial;
+		}
+
+		header {
+			padding: 10px 0;
+			margin-bottom: 30px;
+		}
+
+		h1 {
+			border-top: 1px solid #5D6975;
+			border-bottom: 1px solid #5D6975;
+			color: #5D6975;
+			font-size: 2.4em;
+			line-height: 1.4em;
+			font-weight: normal;
+			text-align: center;
+			margin: 0 0 20px;
+		}
+
+		.clearfix:after {
+			content: "";
+			display: table;
+			clear: both;
+		}
+
+
+		#details {
+			display: inline-flex;
+			position: relative;
+			width: 100%;
+			background-color: red;
+		}
+
+		#company #customer {
+
+			display: inline-flex;
+		}
+
+		#company {
+			text-align: left;
+			height: 120px;
+			width: 40%;
+			padding: 10px;
+			font-size: 13px;
+			font-weight: lighter;
+			background-color: green;
+		}
+
+		#customer {
+			text-align: right;
+			height: 120px;
+			width: 40%;
+			padding: 10px;
+			font-size: 13px;
+			font-weight: lighter;
+			background-color: yellow;
+		}
+
+		a {
+			color: #5D6975;
+			text-decoration: underline;
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			border-spacing: 0;
+			margin-bottom: 20px;
+		}
+
+		table tr:nth-child(2n-1) td {
+			background: #F5F5F5;
+		}
+
+		table th,
+		table td {
+			text-align: center;
+		}
+
+		table th {
+			padding: 5px 20px;
+			color: #5D6975;
+			border-bottom: 1px solid #C1CED9;
+			white-space: nowrap;
+			font-weight: bolder;
+		}
+
+		table .service,
+		table .desc {
+			text-align: left;
+		}
+
+		table td {
+			padding: 20px;
+			text-align: right;
+		}
+
+		table td.service,
+		table td.desc {
+			vertical-align: top;
+		}
+
+		table td.unit,
+		table td.qty,
+		table td.total {
+			font-size: 1.2em;
+		}
+
+		table td.grand {
+			border-top: 1px solid #5D6975;
+		}
+
+		footer {
+			color: #5D6975;
+			width: 100%;
+			height: 30px;
+			position: absolute;
+			bottom: 0;
+			border-top: 1px solid #C1CED9;
+			padding: 8px 0;
+			text-align: center;
+		}
+	</style>
+
+</head>
+
+<body>
+
+	<header>
+		<h1>
+			Facture N°
+			{{ order.orderNumber }}
+		</h1>
+
+		<div id="details">
+			<div id="company" class="clearfix">
+				<div>ANDREAN SOLUTIONS
+				</div>
+				<div>00 rue des ........,<br />
+					Cayenne 97300, Guyane</div>
+				<div>0594 01.23.45</div>
+			</div>
+			<div id="customer">
+				<div>
+					{{ order.customer.firstname }}
+					{{ order.customer.lastname }}
+				</div>
+				<div>
+					{{ order.address }}
+				</div>
+				<div>
+					{{ order.city }}
+					{{ order.zip }}, Guyane
+				</div>
+				<div>
+					<a href="{{ order.customer.email }}">{{ order.customer.email }}</a>
+				</div>
+			</div>
+
+		</div>
+	</header>
+
+
+	<main>
+		<table>
+			<thead>
+				<tr>
+					<th class="desc">DESCRIPTION</th>
+					<th class="service">COULEUR</th>
+					<th>RELIURE</th>
+					<th>QUANTITE</th>
+					<th>PU</th>
+				</tr>
+			</thead>
+			<tbody>
+
+				{% set filePrice = 0 %}
+
+				{% for file in order.files %}
+				<tr>
+					<td class="desc">
+						{{file.name}}
+					</td>
+					<td class="service">
+						{{file.color ? 'oui' : 'non'}}
+					</td>
+					<td class="unit">
+						{{file.reliure ? 'oui' : 'non'}}
+					</td>
+					<td class="qty">
+						{{file.amount}}
+					</td>
+					<td class="total">
+						{{file.price}}
+						€
+					</td>
+				</tr>
+
+				{% set filePrice = filePrice + ( file.price * file.amount )  %}
+
+				{% endfor %}
+
+
+				<tr>
+					<td colspan="4">PRIX</td>
+					<td class="total">{{ filePrice }}
+						€</td>
+				</tr>
+				<tr>
+					<td colspan="4">{{ order.option.name }}</td>
+					<td class="total">{{ order.option.price }}
+						€</td>
+				</tr>
+				<tr>
+					<td colspan="4">Frais de livraison</td>
+					<td class="total">????</td>
+				</tr>
+				<tr>
+					<td colspan="4" class="grand total">PRIX TOTAL</td>
+					<td class="grand total">{{ order.price }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</main>
+	<footer>
+		La facture a été créée sur un ordinateur et est valable sans la signature et le sceau.
+	</footer>
+
+
+</body>
+
+</html>

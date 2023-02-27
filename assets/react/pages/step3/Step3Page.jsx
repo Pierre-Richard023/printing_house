@@ -2,8 +2,8 @@ import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import CardOptions from "../../components/step3/cardOptions"
-import { createBD, getDBInformations, getOptionsDBInformations, setOptionsDBInformations } from '../../request/orderRequest'
-import { getOptionsChoose, initOptions, saveOption } from '../../store/slice/step3Slice'
+import { setOptionsDBInformations } from '../../request/orderRequest'
+import { getOptionsChoose } from '../../store/slice/step3Slice'
 
 const Step3Page = () => {
 
@@ -17,6 +17,15 @@ const Step3Page = () => {
     useEffect(() => {
         dispatch(getOptionsChoose())
     }, [])
+
+
+    const handleClickNext = () => {
+
+        setOptionsDBInformations(optionChoose, priceChoose, price)
+
+        const url = `${window.location.origin}/orders/paiement`
+        window.location = url
+    }
 
 
 
@@ -61,11 +70,13 @@ const Step3Page = () => {
                         }
                         {
                             hasChoose &&
-                            <Link className="px-8 py-3 font-semibold rounded-full text-white bg-primary"
-                                to={"/step-3"}
+
+
+                            <button className="px-8 py-3 font-semibold rounded-full text-white bg-primary"
+                                    onClick={handleClickNext}
                             >
                                 Suivant
-                            </Link>
+                            </button>
                         }
                     </div>
                 </div>

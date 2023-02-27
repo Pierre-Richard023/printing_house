@@ -17,8 +17,8 @@ export const getAllInformation = createAsyncThunk('step4/getAllInformation',()=>
 
 
 
-export const step4Slice = createSlice({
-    name: 'step4',
+export const paymentSlice = createSlice({
+    name: 'payment',
     initialState: {
         loadInformation:false,
         name:"",
@@ -52,9 +52,9 @@ export const step4Slice = createSlice({
 })
 
 
-export const { setName } = step4Slice.actions
+export const { setName } = paymentSlice.actions
 
 
 
 
-export default step4Slice.reducer
+export default paymentSlice.reducer

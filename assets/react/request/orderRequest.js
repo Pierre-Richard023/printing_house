@@ -149,8 +149,8 @@ export const fillForm = async (informations) =>{
     const statusForm=document.querySelector('#orders_status')
     const stateForm=document.querySelector('#orders_state')
     const phoneForm=document.querySelector('#orders_phone')
-    const optionsForm=document.querySelector('#orders_options')
-    const sendOptionForm=document.querySelector('#orders_sendOption') 
+    const optionsForm=document.querySelector('#orders_optionsFiles')
+    const sendOptionForm=document.querySelector('#orders_option') 
 
     filesForm.files=await dataTransfer.files
     addressForm.value=` ${ informations.address }`

@@ -44,7 +44,7 @@ class Orders
     #[ORM\JoinColumn(nullable: false)]
     private ?User $customer = null;
 
-    #[ORM\OneToMany(mappedBy: 'orders', targetEntity: Files::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'orders', targetEntity: Files::class, orphanRemoval: true, cascade : ["persist"])]
     private Collection $files;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
@@ -52,6 +52,9 @@ class Orders
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createAt = null;
+
+    #[ORM\Column]
+    private ?float $price = null;
 
     public function __construct()
     {
@@ -221,6 +224,18 @@ class Orders
     public function setCreateAt(\DateTimeInterface $createAt): self
     {
         $this->createAt = $createAt;
+
+        return $this;
+    }
+
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(float $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

@@ -1,0 +1,20 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Imprimerie - Paiement
+{% endblock %}
+
+{% block body %}
+
+	<div {{ react_component('PaymentController', { 'name' : app.user.firstname ~ ' '~ app.user.lastname } ) }}>
+
+		<div class="w-16 h-16 border-4 border-dashed rounded-full animate-spin dark:border-violet-400"></div>
+
+	</div>
+
+
+	{{ form_start(form) }}
+	{{ form_widget(form) }}
+	{{ form_end(form) }}
+
+{% endblock %}
