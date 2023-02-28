@@ -1,0 +1,23 @@
+{% extends 'admin/dashboard.html.twig' %}
+
+{% block title %}Edit SendOption
+{% endblock %}
+
+{% block body %}
+
+	<div class="relative w-full h-24">
+		<div class="absolute top-0 left-0 p-6">
+			<a class="bg-secondary text-white px-8 py-3 font-semibold rounded-full" href="{{ path('admin.option.index') }}">Retour</a>
+		</div>
+	</div>
+
+	<div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8">
+		<div class="text-xl leading-none font-bold text-gray-900 mb-10">
+			Détails de l'option :
+		</div>
+		<div class="block w-full  text-center  overflow-x-auto">
+			{{ include('admin/option/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+		</div>
+	</div>
+
+{% endblock %}

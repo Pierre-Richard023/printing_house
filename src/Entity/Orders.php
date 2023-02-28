@@ -239,4 +239,29 @@ class Orders
 
         return $this;
     }
+
+    public function approve()
+    {
+        $this->status=true;
+        $this->state=1;
+        return $this;
+    }
+
+    public function approveImpression()
+    {
+        $this->state=1;
+        return $this;
+    }
+
+    public function approveDelivery()
+    {
+        $this->state=2;
+        return $this;
+    }
+
+    public function validDelivery()
+    {
+        $this->state=3;
+        return $this;
+    }
 }

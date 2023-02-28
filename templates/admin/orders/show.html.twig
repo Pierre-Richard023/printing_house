@@ -1,0 +1,155 @@
+{% extends 'admin/dashboard.html.twig' %}
+
+{% block title %}
+    Commande {{ order.orderNumber }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container mt-4">
+
+
+    <div class="container my-2">
+        <div class="d-grid gap-2 d-md-block">
+            <a class="btn btn-warning" href="{{ path('admin.orders.index') }}">Retour</a>
+        </div>
+    </div>
+
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Détails de la commande {{ order.orderNumber }} :
+            {% if order.status == false %}
+                <a class="btn btn-success" href=" {{ path('admin.orders.valid',{ 'id' : order.id  }) }} ">
+                    Valider
+                </a>
+            {% endif %}
+        </div>
+        <div class="card-body">
+
+            <div class="container">
+
+                <div class="d-flex justify-content-between pt-2">
+                    <h4 class="fw-bold mb-0 text-primary">Ma Commande : N°
+                        {{ order.orderNumber }}</h4>
+                </div>
+
+                <div class="container fw-lighter text-muted">
+
+                    <div class="d-flex justify-content-between">
+                        <p class="mb-0">
+                            Date de la commande  :
+                            <span>
+						        {{ order.createAt | format_datetime('medium', 'none', locale='fr') }}
+					        </span>
+                        </p>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <p class="mb-0">
+                            Clé de paiement  :
+                            <strong>
+						        {{ order.paymentIntent }}
+					        </strong>
+                        </p>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <p class="mb-0">
+                            Prix de la commande  :
+                            <strong>
+                                {{ order.price }}€
+                            </strong>
+                        </p>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <p class="mb-0">
+                            Etat de la commande  :
+                            <strong>
+                                {{ order.status ? 'Valider' : 'Attente de validation' }}
+                            </strong>
+                        </p>
+                    </div>
+
+
+                    <div class="d-flex justify-content-between">
+                        <p class="mb-0">
+                            Téléphone :
+                            <span>
+						        {{ order.phone }}
+					        </span>
+                        </p>
+                    </div>
+
+                    <div class="">
+                        Adresse de livraison :
+                        <div class="container text-uppercase fw-bolder ">
+                            {{ 	order.user.lastname }}
+                            {{ 	order.user.firstname }}
+                            <br/>
+                            {{  order.address }}
+                            <br/>
+                            {{  order.zip }}
+                            {{  order.city }}
+                            <br/>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="d-flex justify-content-between pt-2">
+                    <h4 class="fw-bold my-2 text-primary">Fichiers</h4>
+                </div>
+            </div>
+
+
+            <div class="container">
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Fichier</th>
+                        <th scope="col">Recto/Verso</th>
+                        <th scope="col">Couleur</th>
+                        <th scope="col">Reliure</th>
+                        <th scope="col">Quantité</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for file in order.files %}
+                            <tr>
+                                <th>
+                                    <a href="{{ asset('uploads/orders/' ~ file.name ) }} " target="_blank">
+                                        {{file.name}}
+                                    </a>
+                                </th>
+                                <td>
+                                    {{file.bothSides ? 'oui' : 'non'}}
+                                </td>
+                                <td>
+                                    {{file.color ? 'oui' : 'non'}}
+                                </td>
+                                <td>
+                                    {{file.reliure ? 'oui' : 'non'}}
+                                </td>
+                                <td>
+                                    {{file.amount}}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

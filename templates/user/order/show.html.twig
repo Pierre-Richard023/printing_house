@@ -7,9 +7,10 @@
 
 {% block body %}
 
-    <div class="relative w-full p-6">
-        <a href="{{ path('user.orders') }}" class=" bg-secondary text-white px-8 py-3 font-semibold rounded-full dark:bg-gray-100 dark:text-gray-800">Retour </a>
-    </div>
+	<div class="relative w-full p-6">
+		<a href="{{ path('user.orders') }}" class=" bg-secondary text-white px-8 py-3 font-semibold rounded-full dark:bg-gray-100 dark:text-gray-800">Retour
+		</a>
+	</div>
 
 
 	<div class="py-14 px-4 md:px-6 2xl:px-20 2xl:container 2xl:mx-auto">
@@ -37,8 +38,8 @@
 						{% set filesPrice = filesPrice + ( file.price * file.amount ) %}
 						<div class="mt-4 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full">
 							<div class="pb-4 md:pb-8 w-full md:w-40">
-								<img class="w-full hidden md:block" src="https://i.ibb.co/84qQR4p/Rectangle-10.png" alt="dress"/>
-								<img class="w-full md:hidden" src="https://i.ibb.co/L039qbN/Rectangle-10.png" alt="dress"/>
+								<div {{ react_component('FileViewController', { 'file' : asset('uploads/orders/' ~ file.path )} ) }}>
+								</div>
 							</div>
 							<div class="border-b border-gray-200 md:flex-row flex-col flex justify-between items-start w-full pb-8 space-y-4 md:space-y-0">
 								<div class="w-full flex flex-col justify-start items-start space-y-8">
@@ -102,7 +103,8 @@
 							</div>
 							<div class="flex justify-between items-center w-full">
 								<p class="text-base dark:text-white leading-4 text-gray-800">Option</p>
-								<p class="text-base dark:text-gray-300 leading-4 text-gray-600">{{ order.option.price }} €</p>
+								<p class="text-base dark:text-gray-300 leading-4 text-gray-600">{{ order.option.price }}
+									€</p>
 							</div>
 						</div>
 						<div class="flex justify-between items-center w-full">

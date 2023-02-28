@@ -1,0 +1,38 @@
+{{ form_start(form) }}
+<fieldset class="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm dark:bg-gray-900">
+	<div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
+
+
+		<div class="col-span-full sm:col-span-3">
+			{{ form_label(form.lastname) }}
+			{{ form_widget(form.lastname ) }}
+		</div>
+
+		<div class="col-span-full sm:col-span-3">
+			{{ form_label(form.firstname) }}
+			{{ form_widget(form.firstname ) }}
+		</div>
+
+		<div class="col-span-full">
+			{{ form_label(form.email) }}
+			{{ form_widget(form.email ) }}
+		</div>
+
+		<div class="col-span-full">
+			{{ form_label(form.password) }}
+			{{ form_widget(form.password ) }}
+		</div>
+
+		<div class="col-span-full flex items-center">
+			{{ form_widget(form.roles) }}
+		</div>
+
+		{{ form_rest(form) }}
+
+
+		<div class="col-span-full sm:col-span-6">
+			<button class="bg-primary w-full text-white px-8 py-3 font-semibold rounded-full">{{ button_label|default('Ajouter') }}</button>
+		</div>
+	</div>
+</fieldset>
+{{ form_end(form) }}

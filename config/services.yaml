@@ -27,3 +27,7 @@ services:
     App\Service\FileUploaderService:
         arguments:
             $targetDirectory: '%orders_directory%'
+
+    App\Service\UserService:
+        arguments:
+            $em: '@doctrine.orm.entity_manager'

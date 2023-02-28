@@ -1,0 +1,27 @@
+{{ form_start(form) }}
+
+<fieldset class="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm dark:bg-gray-900">
+	<div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
+		<div class="col-span-full sm:col-span-3">
+			{{ form_label(form.name, 'Nom', {'label_attr': {'class': 'col-sm-2 col-form-label'}}) }}
+			{{ form_widget(form.name) }}
+		</div>
+
+		<div class="col-span-full sm:col-span-3">
+			{{ form_label(form.price, 'Prix', {'label_attr': {'class': 'col-sm-2 col-form-label'}}) }}
+			{{ form_widget(form.price) }}
+		</div>
+
+		<div class="col-span-full">
+			{{ form_label(form.description, 'Description', {'label_attr': {'class': 'col-sm-2 col-form-label'}}) }}
+			{{ form_widget(form.description) }}
+		</div>
+
+		{{ form_rest(form) }}
+
+		<div class="col-span-full sm:col-span-6">
+			<button class="bg-primary w-full text-white px-8 py-3 font-semibold rounded-full">{{ button_label|default('Ajouter') }}</button>
+		</div>
+	</div>
+</fieldset>
+{{ form_end(form) }}

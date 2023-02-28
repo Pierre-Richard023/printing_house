@@ -1,0 +1,87 @@
+{% extends 'admin/dashboard.html.twig' %}
+
+{% block title %}
+	Listes de toutes les commandes en cours d'impresion
+{% endblock %}
+
+{% block body %}
+
+
+	{{ include('admin/orders/_nav.html.twig') }}
+
+
+	<div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
+		<h3 class="text-xl leading-none font-bold text-gray-900 mb-10">Listes des commandes</h3>
+		<div class="block w-full overflow-x-auto">
+
+
+			<table class="min-w-full border-collapse border-spacing-y-2 border-spacing-x-2">
+				<thead class="hidden border-b lg:table-header-group">
+					<tr class="">
+						<td class="whitespace-normal py-4 text-sm font-semibold text-gray-800 sm:px-3">
+							Numéro
+						</td>
+						<td class="whitespace-normal py-4 text-sm font-medium text-gray-500 sm:px-3">
+							Prix
+						</td>
+						<td class="whitespace-normal py-4 text-sm font-medium text-gray-500 sm:px-3">
+							Etat
+						</td>
+						<td class="whitespace-normal py-4 text-sm font-medium text-gray-500 sm:px-3">
+							Status
+						</td>
+						<td class="whitespace-normal py-4 text-sm font-medium text-gray-500 sm:px-3">
+							Actions
+						</td>
+					</tr>
+				</thead>
+
+				<tbody class="bg-white lg:border-gray-300">
+
+					{% for order in orders %}
+						<tr class="">
+							<td class="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-600 sm:px-3 lg:table-cell">
+								{{ order.orderNumber }}
+							</td>
+							<td class="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-600 sm:px-3 lg:table-cell">
+								{{ order.price }}
+							</td>
+							<td class="whitespace-no-wrap hidden py-4 text-left text-sm text-gray-600 sm:px-3 lg:table-cell lg:text-left">
+								{{ order.price }}
+								€
+							</td>
+							<td class="whitespace-no-wrap py-4 text-right text-sm text-gray-600 sm:px-3 lg:text-left">
+								{% if order.status ==0 %}
+									<span class="ml-2 mr-3 whitespace-nowrap rounded-full bg-purple-100 px-2 py-0.5 text-purple-800">
+										Attente de validation
+									</span>
+								{% elseif order.status  == 1 %}
+									{% if order.state == 1 %}
+										<span class="ml-2 mr-3 whitespace-nowrap rounded-full bg-purple-100 px-2 py-0.5 text-purple-800">
+											en cours d'impression
+										</span>
+									{% elseif order.state  == 2 %}
+										<span class="ml-2 mr-3 whitespace-nowrap rounded-full bg-purple-100 px-2 py-0.5 text-purple-800">
+											en cours de livraison
+										</span>
+									{% elseif order.state  == 3 %}
+										<span class="ml-2 mr-3 whitespace-nowrap rounded-full bg-purple-100 px-2 py-0.5 text-purple-800">
+											livré
+										</span>
+									{% endif %}
+								{% endif %}
+							</td>
+							<td class="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-3 lg:table-cell">
+								{{ include('admin/orders/_actions.html.twig') }}
+							</td>
+						</tr>
+					{% endfor %}
+
+
+				</tbody>
+
+			</table>
+
+		</div>
+	</div>
+{% endblock %}
