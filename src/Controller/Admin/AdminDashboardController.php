@@ -16,17 +16,13 @@ class AdminDashboardController extends AbstractController
     {
         $nbOrder=1;
         $nbOrderInvalid=1;
-        $nbOrderPrinting=1;
-        $nbOrderShipped=1;
-        $nbOrderDelivered=1;
+        $nbUsers=0;
 
         return $this->render('admin/index.html.twig',[
             'orders'=>$this->ordersRepository->findBy(['status'=>0]),
-            'nbOrder'=>$nbOrder,
-            '$nbOrderInvalid'=>$nbOrderInvalid,
-            '$nbOrderPrinting'=>$nbOrderPrinting,
-            '$nbOrderShipped'=>$nbOrderShipped,
-            '$nbOrderDelivered'=>$nbOrderDelivered,
+            'nbOrders'=>$nbOrder,
+            'nbOrdersInvalid'=>$nbOrderInvalid,
+            'nbUsers'=>$nbUsers
         ]);
     }
 }

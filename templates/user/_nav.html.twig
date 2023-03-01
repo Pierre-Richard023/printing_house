@@ -1,15 +1,14 @@
+{% set isSelected 	= "border-b-secondary font-semibold text-secondary " %}
+{% set notSelected 	= "font-medium text-gray-600 hover:border-b-secondary hover:text-secondary" %}
+
+
 <div class="mx-auto max-w-screen-xl bg-white">
 	<div class="bg-white py-2 px-3">
 		<nav class="flex flex-wrap gap-4">
-			<a href="#" class="inline-flex whitespace-nowrap border-b-2 border-transparent py-2 px-3 text-sm font-medium text-gray-600 transition-all duration-200 ease-in-out hover:border-b-secondary hover:text-secondary">
+			<a href="{{ path('user.index') }}" class="inline-flex whitespace-nowrap border-b-2 border-transparent py-2 px-3 text-sm transition-all duration-200 ease-in-out {{ position == 'user' ? isSelected : notSelected }} " >
 				Compte
 			</a>
-
-			<a href="#" class="inline-flex whitespace-nowrap border-b-2 border-transparent py-2 px-3 text-sm font-medium text-gray-600 transition-all duration-200 ease-in-out hover:border-b-secondary hover:text-secondary">
-				Paramètres
-			</a>
-
-			<a href="#" class="inline-flex whitespace-nowrap border-b-2 border-transparent border-b-secondary py-2 px-3 text-sm font-semibold text-secondary transition-all duration-200 ease-in-out">
+			<a href="{{ path('user.orders') }}" class="inline-flex whitespace-nowrap border-b-2 border-transparent py-2 px-3 text-sm transition-all duration-200 ease-in-out {{ position == 'orders' ? isSelected : notSelected }} ">
 				Commandes
 			</a>
 

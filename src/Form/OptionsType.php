@@ -17,17 +17,17 @@ class OptionsType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'attr' => [
-                    'class' => 'w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 dark:border-gray-700 dark:text-gray-900'
+                    'class' => 'w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-secondary dark:border-gray-700 dark:text-gray-900'
                 ],
             ])
             ->add('price',NumberType::class,[
                 'attr' => [
-                    'class' => 'w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 dark:border-gray-700 dark:text-gray-900'
+                    'class' => 'w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-secondary dark:border-gray-700 dark:text-gray-900'
                 ],
             ])
             ->add('description',TextareaType::class,[
                 'attr' => [
-                    'class' => 'w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 dark:border-gray-700 dark:text-gray-900'
+                    'class' => 'w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-secondary dark:border-gray-700 dark:text-gray-900'
                 ],
             ]);
     }

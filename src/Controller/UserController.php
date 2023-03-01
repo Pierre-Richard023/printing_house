@@ -12,24 +12,30 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
 
+    #[Route('/user', name: 'user.index')]
+    public function index(): Response
+    {
+        return $this->render('user/index.html.twig', [
+            'position' => 'user',
+            'controller_name' => 'UserController',
+        ]);
+    }
+
+
+
     #[Route('/user/commandes', name: 'user.orders')]
     public function orders()
     {
 
-        /**
-         * @var User
-         */
         $user=$this->getUser();
-
         $orders=$user->getOrders();
 
         return $this->render('user/order/index.html.twig',[
+            'position'=>'orders',
             'controller_name' => 'UserController',
             'orders'=>$orders
         ]);
     }
-
-    
 
 
     #[Route('/user/commandes/{id}', name: 'user.orders.show', methods: ['GET'])]
