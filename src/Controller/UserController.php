@@ -3,12 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Orders;
-use App\Repository\FilesRepository;
 use App\Service\ReceivedService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[IsGranted('ROLE_USER')]
 class UserController extends AbstractController
 {
 
@@ -39,11 +40,10 @@ class UserController extends AbstractController
 
 
     #[Route('/user/commandes/{id}', name: 'user.orders.show', methods: ['GET'])]
-    public function show(Orders $order,FilesRepository $filesRepository): Response
+    public function show(Orders $order): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        $files=$filesRepository->findByOrders($order->getId());
+        $files=$order->getFiles();
         
         return $this->render('user/order/show.html.twig', [
             'controller_name'=>'userControlller',

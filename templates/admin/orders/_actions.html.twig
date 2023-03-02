@@ -8,16 +8,7 @@
 
 	</a>
 
-	{% if order.status == 0 %}
-
-		<a class="text-secondary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Valider la commande" href=" {{ path('admin.orders.valid', {'id': order.id, '_token': csrf_token('order' ~ order.id) } ) }} ">
-			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-				<path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
-			</svg>
-
-		</a>
-
-	{% elseif order.status  == 1 %}
+	{% if order.status  == 1 %}
 
 		{% if order.state  == 1 %}
 			<a class="text-secondary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Valider l'envoi de la commande " href=" {{ path('admin.orders.approveDelivery', {'id': order.id, '_token': csrf_token('order' ~ order.id) } ) }} ">

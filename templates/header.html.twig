@@ -1,49 +1,64 @@
-<nav class="top-0 left-0 z-20 w-full border-b border-gray-200 bg-white py-2.5 px-6 sm:px-4">
-	<div class="container mx-auto flex max-w-6xl flex-wrap items-center justify-between">
-		<a href="{{ path('home') }}" class="flex items-center">
-			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mr-3 h-6 text-blue-500 sm:h-9">
+<header class=" text-sm font-serif font-bold container relative mx-auto flex flex-col overflow-hidden px-4 py-4 lg:flex-row lg:items-center">
+	<a href="{{ path('home') }}" class="flex items-center whitespace-nowrap text-2xl font-black hover:bg-transparent hover:text-secondary">
+		<span class="mr-2 w-8">
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mr-3 h-6 text-primary sm:h-9">
 				<path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/>
 			</svg>
-
-			<span class="self-center whitespace-nowrap text-xl font-semibold">Imprimerie</span>
-		</a>
-		<div class="mt-2 sm:mt-0 sm:flex md:order-2">
+		</span>
+		Imprimerie
+	</a>
+	<input type="checkbox" class="peer hidden" id="navbar-open"/>
+	<label class="absolute top-5 right-5 cursor-pointer lg:hidden" for="navbar-open">
+		<svg class="h-7 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path>
+		</svg>
+	</label>
+	<nav aria-label="Header Navigation" class="peer-checked:pt-8 peer-checked:max-h-60 flex max-h-0 w-full flex-col items-center overflow-hidden transition-all lg:ml-24 lg:max-h-full lg:flex-row">
+		<ul class="flex w-full flex-col items-center space-y-2 lg:flex-row lg:justify-center lg:space-y-0">
+			<li class="lg:mr-4">
+				<a class="rounded text-gray-700 transition hover:bg-transparent hover:text-secondary" href="{{ path('home') }}">
+					Accueil
+				</a>
+			</li>
+			<li class="lg:mr-4">
+				<a class="rounded text-gray-700 transition hover:bg-transparent hover:text-secondary" href="{{ path('orders') }}">
+					Impression en ligne
+				</a>
+			</li>
 			{% if app.user %}
-				<a href="{{ path('app_logout') }}" class="rounde mr-3 hidden border border-red-400 py-1.5 px-6 text-center text-sm font-medium text-red-400 focus:outline-none focus:ring-4 focus:ring-primary focus:bg-red-400 focus:text-white md:inline-block rounded-lg">Déconnexion</a>
-			{% else %}
-				<a href="{{ path('login') }}" class="rounde mr-3 hidden border border-primary py-1.5 px-6 text-center text-sm font-medium text-primary focus:outline-none focus:ring-4 focus:ring-primary md:inline-block rounded-lg">S'identifier</a>
-				<a href="{{ path('register') }}" class="rounde mr-3 hidden bg-primary py-1.5 px-6 text-center text-sm font-medium text-white hover:bg-secondary focus:outline-none focus:ring-4 focus:ring-secondary md:mr-0 md:inline-block rounded-lg">S'inscrire</a>
-			{% endif %}
-			<button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 md:hidden" aria-controls="navbar-sticky" aria-expanded="false">
-				<span class="sr-only">Open main menu</span>
-				<svg class="h-6 w-6" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-					<path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
-				</svg>
-			</button>
-		</div>
-		<div class="hidden w-full items-center justify-between md:order-1 md:flex md:w-auto" id="navbar-sticky">
-			<ul class="mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-50 p-4 md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:text-sm md:font-medium">
-				<li>
-					<a href="{{ path('home') }}" class="block rounded bg-transparent py-2 pl-3 pr-4 text-white md:bg-transparent md:p-0 md:text-blue-700" aria-current="page">
-						Accueil
-					</a>
-				</li>
-				<li>
-					<a href="{{ path('orders') }}" class="block rounded py-2 pl-3 pr-4 text-gray-700 md:p-0 md:hover:bg-transparent md:hover:text-secondary">
-						Impression en ligne
-					</a>
-				</li>
-				<li>
-					<a href="{{ path('user.orders') }}" class="block rounded py-2 pl-3 pr-4 text-gray-700 md:p-0 md:hover:bg-transparent md:hover:text-secondary">
+				<li class="lg:mr-4">
+					<a class="rounded text-gray-700 transition hover:bg-transparent hover:text-secondary" href="{{ path('user.orders') }}">
 						Mes Commandes
 					</a>
 				</li>
-				<li>
-					<a href="{{ path('contact') }}" class="block rounded py-2 pl-3 pr-4 text-gray-700 md:p-0 md:hover:bg-transparent md:hover:text-secondary">
-						Contact
+			{% endif %}
+			<li class="lg:mr-4">
+				<a class="rounded text-gray-700 transition hover:bg-transparent hover:text-secondary" href="{{ path('contact') }}">
+					Contact
+				</a>
+			</li>
+		</ul>
+		<hr class="mt-4 w-full lg:hidden"/>
+		<div class="my-4 flex items-center space-x-4 space-y-2 lg:my-0 lg:ml-auto lg:space-x-2 lg:space-y-0">
+
+			{% if app.user %}
+
+				{% if is_granted('ROLE_ADMIN') %}
+					<a href="{{ path('admin.dashboard') }}"  target="_blank" title="" class="whitespace-nowrap rounded-xl bg-white border border-primary px-6 py-1.5 text-primary transition-all duration-200 hover:bg-secondary hover:text-white hover:border-secondary">
+						Dashboard
 					</a>
-				</li>
-			</ul>
+				{% endif %}
+				<a href="{{ path('app_logout') }}" title="" class="whitespace-nowrap rounded-xl bg-white border border-red-700 px-6 py-1.5 text-red-700 transition-all duration-200 hover:bg-red-700 hover:text-white hover:border-red-700">
+					déconnexion
+				</a>
+			{% else %}
+				<a href="{{ path('login') }}" title="" class="whitespace-nowrap rounded-xl bg-white border border-primary px-6 py-1.5 text-primary transition-all duration-200 hover:bg-secondary hover:text-white hover:border-secondary">
+					S'identifier
+				</a>
+				<a href="{{ path('register') }}" title="" class="whitespace-nowrap rounded-xl bg-primary px-6 py-1.5 text-white transition-all duration-200 hover:bg-secondary">
+					S'inscrire
+				</a>
+			{% endif %}
 		</div>
-	</div>
-</nav>
+	</nav>
+</header>

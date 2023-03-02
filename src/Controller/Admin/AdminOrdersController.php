@@ -37,8 +37,13 @@ class AdminOrdersController extends AbstractController
     #[Route('/{id<[0-9]+>}', name: 'admin.orders.show', methods: ['GET'])]
     public function show(Orders $order): Response
     {
+
+        $files=$order->getFiles();
+
         return $this->render('admin/orders/show.html.twig', [
             'order' => $order,
+            'orders'=>null,
+            'files'=>$files
         ]);
     }
 
