@@ -35,7 +35,9 @@ class OrdersType extends AbstractType
             ->add('status', HiddenType::class,[])
             ->add('state', HiddenType::class,[])
             ->add('phone', HiddenType::class,[])
-            ->add('payment_intent', HiddenType::class,[])
+            ->add('payment_intent', HiddenType::class,[
+                'mapped'=>false,
+            ])
             ->add('option', HiddenType::class,[
                 'mapped' => false,
                 'required' => false,

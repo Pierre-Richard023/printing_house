@@ -45,11 +45,15 @@ export const step3Slice = createSlice({
         })
 
         builder.addCase(getOptionsChoose.fulfilled, (state, action) => {
-            state.optionChoose = action.payload.optionChoose
-            state.priceChoose = action.payload.priceChoose
+
+            if(state.optionChoose.length > 0 ){
+                state.optionChoose = action.payload.optionChoose
+                state.priceChoose = action.payload.priceChoose
+            }
             state.orderPrice = action.payload.price
-            state.price = action.payload.price +  action.payload.priceChoose
-            if(action.payload.optionChoose != -1)
+            state.price = state.orderPrice + state.priceChoose
+
+            if(action.payload.optionChoose.length > 0)
                 state.hasChoose=true
 
         })

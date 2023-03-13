@@ -4,8 +4,6 @@ import { getPricePdfFile , getDBInformations, setBDInformations } from "../../re
 
 
 export const getPriceFiles = createAsyncThunk('step2/getPriceFiles',()=>{
-    console.log('lance la fonction prix')
-
     return getPricePdfFile()
 })
 
@@ -83,9 +81,11 @@ export const step2Slice = createSlice({
 
         builder.addCase(getInformations.fulfilled, (state, action) => {
             state.address = action.payload.address
-            state.zip = action.payload.zip
-            state.city = action.payload.city
-            state.cityPrice = action.payload.cityPrice
+            if( action.payload.zip.length != 0 || action.payload.city != 0  ){
+                state.zip = action.payload.zip
+                state.city = action.payload.city
+                state.cityPrice = action.payload.cityPrice
+            }
             state.phone = action.payload.phone
             state.priceFiles = action.payload.filesPrice
         })

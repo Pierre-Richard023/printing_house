@@ -185,7 +185,7 @@ export const createBD = () => {
                 'city': "",
                 'zip': "",
                 'phone': "",
-                'optionChoose': -1,
+                'optionChoose': "",
                 'cityPrice': 0,
                 'filesPrice': 0,
                 'orderPrice': 0,
@@ -223,9 +223,9 @@ export const getDBInformations = () => {
 
 }
 
-export const setFilesPriceDBInformations = (price) => {
-    createBD()
-    db.table('informations').update(0, {filesPrice : price } )
+export const setFilesPriceDBInformations = async (price) => {
+    await createBD()
+    await db.table('informations').update(0, {filesPrice : price } )
 
 }
 

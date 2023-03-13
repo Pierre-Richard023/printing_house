@@ -17,15 +17,24 @@ class UserFixtures extends Fixture
     {
 
         $user =new User();
+        $admin=new User();
 
-        $user   ->setEmail('john@test.com')
+        $user   ->setEmail('user@imprimerie.com')
                 ->setLastname('John')
                 ->setFirstname('Doe')
                 ->setRegisteredSince(new \DateTime())
-                ->setPassword($this->hasher->hashPassword($user, 'password'))
+                ->setPassword($this->hasher->hashPassword($user, 'Azerty0'))
         ;
 
+        $admin   ->setEmail('admin@imprimerie.com')
+        ->setLastname('Jane')
+        ->setFirstname('Doe')
+        ->setRegisteredSince(new \DateTime())
+        ->setPassword($this->hasher->hashPassword($user, 'Azerty0'))
+;
+
         $manager->persist($user);
+        $manager->persist($admin);
         $manager->flush();
     }
 }

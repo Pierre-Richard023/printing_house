@@ -37,9 +37,6 @@ class Orders
     #[ORM\Column(length: 30)]
     private ?string $phone = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $payment_intent = null;
-
     #[ORM\ManyToOne(inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $customer = null;
@@ -55,6 +52,9 @@ class Orders
 
     #[ORM\Column]
     private ?float $price = null;
+
+    #[ORM\OneToOne(mappedBy: 'orders', cascade: ['persist', 'remove'])]
+    private ?Payments $payment = null;
 
     public function __construct()
     {
@@ -146,18 +146,6 @@ class Orders
     public function setPhone(string $phone): self
     {
         $this->phone = $phone;
-
-        return $this;
-    }
-
-    public function getPaymentIntent(): ?string
-    {
-        return $this->payment_intent;
-    }
-
-    public function setPaymentIntent(string $payment_intent): self
-    {
-        $this->payment_intent = $payment_intent;
 
         return $this;
     }
@@ -262,6 +250,23 @@ class Orders
     public function validDelivery()
     {
         $this->state=3;
+        return $this;
+    }
+
+    public function getPayment(): ?Payments
+    {
+        return $this->payment;
+    }
+
+    public function setPayment(Payments $payment): self
+    {
+        // set the owning side of the relation if necessary
+        if ($payment->getOrders() !== $this) {
+            $payment->setOrders($this);
+        }
+
+        $this->payment = $payment;
+
         return $this;
     }
 }

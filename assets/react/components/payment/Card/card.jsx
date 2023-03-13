@@ -33,10 +33,10 @@ const Card = ({ orderPrice }) => {
     return (
         <div className="card-payment">
             {!hasSecrestK && (
-                <div className="d-flex justify-content-center">
-                    <div className="spinner-border" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                    </div>
+                <div className="flex items-center justify-center space-x-2">
+                    <div className="w-6 h-6 rounded-full animate-pulse bg-secondary"></div>
+                    <div className="w-6 h-6 rounded-full animate-pulse bg-secondary"></div>
+                    <div className="w-6 h-6 rounded-full animate-pulse bg-secondary"></div>
                 </div>
             )}
             {clientSecret && (

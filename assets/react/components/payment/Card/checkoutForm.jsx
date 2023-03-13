@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import {
     PaymentElement,
     useStripe,
     useElements
 } from "@stripe/react-stripe-js";
-import { clearStore, clearDBInformations } from "../../../request/orderRequest";
+import {clearStore, clearDBInformations} from "../../../request/orderRequest";
 
 export default function CheckoutForm() {
     const stripe = useStripe();
@@ -26,7 +26,7 @@ export default function CheckoutForm() {
             return;
         }
 
-        stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
+        stripe.retrievePaymentIntent(clientSecret).then(({paymentIntent}) => {
             switch (paymentIntent.status) {
                 case "succeeded":
                     setMessage("Payment succeeded!");
@@ -55,18 +55,17 @@ export default function CheckoutForm() {
 
         setIsLoading(true);
 
-
         await stripe.confirmPayment({
             elements,
             confirmParams: {
                 // Make sure to change this to your payment completion page
-                return_url: "http://localhost:8000",
+                return_url: `${window.location.origin}`,
             },
             redirect: "if_required",
         }).then(async (res) => {
 
 
-            const { error, paymentIntent } = res
+            const {error, paymentIntent} = res
 
 
             if (paymentIntent) {
@@ -98,23 +97,30 @@ export default function CheckoutForm() {
 
     return (
         <form id="payment-form" onSubmit={handleSubmit}>
-            <PaymentElement id="payment-element" />
+            <PaymentElement id="payment-element"/>
             <div className="">
-                <button className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white"
-                    disabled={isLoading || !stripe || !elements} id="submit">
+                <button className="mt-4 mb-8 w-full rounded-md bg-primary px-6 py-3 font-medium text-white"
+                        disabled={isLoading || !stripe || !elements} id="submit">
                     <span id="button-text">
                         {isLoading ? (
                             <div className="flex items-center justify-center space-x-2">
-                                <div className="w-4 h-4 rounded-full animate-pulse dark:bg-violet-400"></div>
-                                <div className="w-4 h-4 rounded-full animate-pulse dark:bg-violet-400"></div>
-                                <div className="w-4 h-4 rounded-full animate-pulse dark:bg-violet-400"></div>
+                                <div className="w-4 h-4 rounded-full animate-pulse bg-primary"></div>
+                                <div className="w-4 h-4 rounded-full animate-pulse bg-primary"></div>
+                                <div className="w-4 h-4 rounded-full animate-pulse bg-primary"></div>
                             </div>
                         ) : "Payer"}
                     </span>
                 </button>
             </div>
             {/* Show any error or success messages */}
-            {message && <div className="alert alert-danger" role="alert" id="payment-message">{message}</div>}
+            {message &&
+                <div className="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700"
+                     role="alert" id="payment-message">
+                    <p>
+                        {message}
+                    </p>
+                </div>
+            }
         </form>
     );
 }

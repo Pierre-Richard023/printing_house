@@ -22,7 +22,6 @@ const Step3Page = () => {
     const handleClickNext = () => {
 
         setOptionsDBInformations(optionChoose, priceChoose, price)
-
         const url = `${window.location.origin}/orders/paiement`
         window.location = url
     }

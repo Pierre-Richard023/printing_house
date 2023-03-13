@@ -58,11 +58,17 @@ const Phone = () => {
                 <label htmlFor="phone" className="text-sm">Téléphone</label>
                 <input  className="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 border-gray-700 text-gray-900" 
                         type="tel" id="phone" placeholder="0694 012345" maxLength={14}
-                        value={phone} onChange={(e) => changeFormat(e)}
+                        value={phone}
+                        onChange={(e) => changeFormat(e)}
                         onKeyDown={(event) => {
-                            if (!/[0-9]/.test(event.key)) {
+                            if ( !/[0-9]/.test(event.key) ) {
+                                if(event.code == 'Backspace'){
+                                    const ph=phone.trimEnd()
+                                    dispatch(savePhone(ph.slice(0,-1)))
+                                }
                                 event.preventDefault();
                             }
+
                         }}
                 />
             </div>

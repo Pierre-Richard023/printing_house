@@ -77,7 +77,7 @@ class OrderSuscriber implements EventSubscriberInterface
     {
         $order=$event->getOrder();
 
-        return $order->getUser()->getEmail();
+        return $order->getCustomer()->getEmail();
     }
 
     public function sendEmail(Array $data)
