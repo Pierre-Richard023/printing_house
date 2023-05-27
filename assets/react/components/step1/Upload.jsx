@@ -1,7 +1,7 @@
 import React from "react"
 import { useDispatch } from 'react-redux'
-import { savePdfFile } from '../../request/orderRequest'
-import { isLoading, uploadFile } from '../../store/slice/step1Slice'
+import { savePdfFile } from '../../services/orders'
+import { isLoading, uploadFile } from '../../store/slice/orderSlice'
 
 
 const Upload = () => {

@@ -1,24 +1,13 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { phoneValid, savePhone } from "../../store/slice/step2Slice";
+import { savePhone } from "../../store/slice/orderSlice";
 
 
 const Phone = () => {
 
     const dispatch = useDispatch()
 
-    const phoneVld = useSelector((state) => state.step2.phoneValid)
-    const phone = useSelector((state) => state.step2.phone)
-
-    useEffect(() => {
-        if (phone.length === 14)
-            dispatch(phoneValid(true))
-        if (phone.length < 14 & phoneVld)
-            dispatch(phoneValid(false))
-
-    }, [phone])
-
-
+    const phone = useSelector((state) => state.order.informations.phone)
 
     const formatPhoneNumber = (value) => {
 

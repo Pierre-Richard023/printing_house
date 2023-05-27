@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { chooseOption, getOptions } from '../../store/slice/step3Slice'
+import { chooseOption, getOptions } from '../../store/slice/orderSlice'
 
 
 const CardOptions = () => {
 
     const dispatch = useDispatch()
-    const optionChoose = useSelector((state) => state.step3.optionChoose)
-    const options = useSelector((state) => state.step3.options)
+    const optionChoose = useSelector((state) => state.order.options.optionChoose)
+    const options = useSelector((state) => state.order.options.options)
 
     useEffect(() => {
-        if (options.length == 0)
+        if (options.length === 0)
             dispatch(getOptions())
     }, [])
 
@@ -23,7 +23,7 @@ const CardOptions = () => {
                         <ul className="grid grid-cols-6 w-full ">
 
                             {
-                                options.map((val, i) =>
+                                options?.map((val, i) =>
 
                                     <li key={i} className="relative col-span-full sm:col-span-2 m-4">
                                         <input className="sr-only peer" type="radio" name="radio" id={"option" + i}

@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { useDispatch } from "react-redux"
-import { updateFile } from "../../store/slice/step1Slice"
+import { updateFile } from "../../store/slice/orderSlice"
 
 const ModalOptions = ({ data, isOpen, onClose, onPriceChange }) => {
 

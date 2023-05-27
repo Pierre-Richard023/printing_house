@@ -1,0 +1,27 @@
+framework:
+    workflows:
+        Order:
+            type: 'workflow' # or 'state_machine'
+            audit_trail:
+                enabled: true
+            marking_store:
+                type: 'method'
+                property: 'status'
+            supports:
+                - App\Entity\Orders
+            initial_marking: validation_pending
+            places:
+                - validation_pending
+                - printing
+                - shipping_in_progress
+                - deliver
+            transitions:
+                to_printing:
+                    from: validation_pending
+                    to:   printing
+                to_shipping:
+                    from: printing
+                    to:   shipping_in_progress
+                to_deliver:
+                    from:  shipping_in_progress
+                    to:    deliver

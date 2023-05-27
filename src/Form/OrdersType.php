@@ -32,8 +32,6 @@ class OrdersType extends AbstractType
             ->add('city', HiddenType::class,[])
             ->add('zip', HiddenType::class,[])
             ->add('price', HiddenType::class,[])
-            ->add('status', HiddenType::class,[])
-            ->add('state', HiddenType::class,[])
             ->add('phone', HiddenType::class,[])
             ->add('payment_intent', HiddenType::class,[
                 'mapped'=>false,

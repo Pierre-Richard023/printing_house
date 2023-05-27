@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { deletePdfFile, getPdfFile, getPdfFiles, updatePdfFile } from "../../request/orderRequest"
-import { getPriceFiles, hasFiles, isUpload } from "../../store/slice/step1Slice"
+// import { deletePdfFile, getPdfFile, getPdfFiles, updatePdfFile } from "../../request/orderRequest"
+import { deletePdfFile, getPdfFile, getPdfFiles, updatePdfFile } from "../../services/orders"
+import { getPriceFiles, hasFiles, isUpload } from "../../store/slice/orderSlice"
 import File from "./file"
 
 
@@ -9,8 +10,8 @@ import File from "./file"
 const Files = () => {
 
     const dispatch = useDispatch()
-    const isUploading = useSelector((state) => state.step1.isUploadFile)
-    const keyFileUpload = useSelector((state) => state.step1.keyFileUpload)
+    const isUploading = useSelector((state) => state.order.files.isUploadFile)
+    const keyFileUpload = useSelector((state) => state.order.files.keyFileUpload)
     const [files, setFiles] = useState([])
 
     useEffect(() => {
@@ -20,10 +21,10 @@ const Files = () => {
     useEffect(() => {
         dispatch(getPriceFiles())
 
-        if (files.length == 0)
-            dispatch(hasFiles(true))
-        else
+        if (files.length === 0)
             dispatch(hasFiles(false))
+        else
+            dispatch(hasFiles(true))
 
     }, [files])
 

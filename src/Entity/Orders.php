@@ -29,10 +29,7 @@ class Orders
     private ?string $zip = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $state = null;
-
-    #[ORM\Column]
-    private ?bool $status = null;
+    private ?string $status = null;
 
     #[ORM\Column(length: 30)]
     private ?string $phone = null;
@@ -55,6 +52,13 @@ class Orders
 
     #[ORM\OneToOne(mappedBy: 'orders', cascade: ['persist', 'remove'])]
     private ?Payments $payment = null;
+
+    #[ORM\ManyToOne]
+    private ?Bookbinding $bookbinding = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?MailType $mailType = null;
 
     public function __construct()
     {
@@ -114,24 +118,12 @@ class Orders
         return $this;
     }
 
-    public function getState(): ?string
-    {
-        return $this->state;
-    }
-
-    public function setState(string $state): self
-    {
-        $this->state = $state;
-
-        return $this;
-    }
-
-    public function isStatus(): ?bool
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
-    public function setStatus(bool $status): self
+    public function setStatus(string $status, $context = []): self
     {
         $this->status = $status;
 
@@ -228,31 +220,6 @@ class Orders
         return $this;
     }
 
-    public function approve()
-    {
-        $this->status=true;
-        $this->state=1;
-        return $this;
-    }
-
-    public function approveImpression()
-    {
-        $this->state=1;
-        return $this;
-    }
-
-    public function approveDelivery()
-    {
-        $this->state=2;
-        return $this;
-    }
-
-    public function validDelivery()
-    {
-        $this->state=3;
-        return $this;
-    }
-
     public function getPayment(): ?Payments
     {
         return $this->payment;
@@ -266,6 +233,30 @@ class Orders
         }
 
         $this->payment = $payment;
+
+        return $this;
+    }
+
+    public function getBookbinding(): ?Bookbinding
+    {
+        return $this->bookbinding;
+    }
+
+    public function setBookbinding(?Bookbinding $bookbinding): self
+    {
+        $this->bookbinding = $bookbinding;
+
+        return $this;
+    }
+
+    public function getMailType(): ?MailType
+    {
+        return $this->mailType;
+    }
+
+    public function setMailType(?MailType $mailType): self
+    {
+        $this->mailType = $mailType;
 
         return $this;
     }

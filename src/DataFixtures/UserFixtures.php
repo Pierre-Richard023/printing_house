@@ -31,6 +31,7 @@ class UserFixtures extends Fixture
         ->setFirstname('Doe')
         ->setRegisteredSince(new \DateTime())
         ->setPassword($this->hasher->hashPassword($user, 'Azerty0'))
+        ->setRoles(["ROLE_ADMIN"])
 ;
 
         $manager->persist($user);
