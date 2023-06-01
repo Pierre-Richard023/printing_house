@@ -29,16 +29,16 @@ export default function CheckoutForm() {
         stripe.retrievePaymentIntent(clientSecret).then(({paymentIntent}) => {
             switch (paymentIntent.status) {
                 case "succeeded":
-                    setMessage("Payment succeeded!");
+                    setMessage("Paiement réussi !");
                     break;
                 case "processing":
-                    setMessage("Your payment is processing.");
+                    setMessage("Votre paiement est en cours de traitement.");
                     break;
                 case "requires_payment_method":
-                    setMessage("Your payment was not successful, please try again.");
+                    setMessage("Votre paiement n'a pas abouti, veuillez réessayer.");
                     break;
                 default:
-                    setMessage("Something went wrong.");
+                    setMessage("Quelque chose s'est mal passé.");
                     break;
             }
         });

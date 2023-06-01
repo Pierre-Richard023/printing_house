@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { chooseBookbinding, getBookbinding, initInformationsStep4, setStepData } from '../../store/slice/orderSlice'
+import { chooseBookbinding, getBookbinding, initInformationsStep4, setStepData,setOrderStatus } from '../../store/slice/orderSlice'
 import Loading from "../../components/loading/loading"
 import { getStepInformations } from "../../services/orders"
 import OptionLists from "../../components/optionLists/optionLists"
@@ -16,23 +16,19 @@ const Step4View = () => {
     const loadOptions = useSelector((state) => state.order.bookbinding.load)
 
     useEffect(() => {
-        if (bookbinding.length === 0)
-            dispatch(getBookbinding())
+        dispatch(getBookbinding())
+        getStepInformations("step4").then(response => {
+            dispatch(initInformationsStep4(response))
+        })
+        const data = {
+            step : 4
+        }
+
+        dispatch(setOrderStatus(data))
+
     }, [])
 
     useEffect(() => {
-            getStepInformations("step4").then(response => {
-                dispatch(initInformationsStep4(response))
-            })
-
-    }, [])
-
-    const choose = (data) => {
-        dispatch(chooseBookbinding(data))
-        uploadStep()
-    }
-
-    const uploadStep = () => {
 
         const stp4 = {
             name: 'step4',
@@ -52,7 +48,13 @@ const Step4View = () => {
 
         dispatch(setStepData(stp4))
         dispatch(setStepData(stp5))
+
+    }, [bookbindingChoose])
+
+    const choose = (data) => {
+        dispatch(chooseBookbinding(data))
     }
+
 
     return (
         <>

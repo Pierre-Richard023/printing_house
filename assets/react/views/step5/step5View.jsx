@@ -1,59 +1,63 @@
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { Link } from "react-router-dom"
 import Form from "../../components/step2/form"
-import { initInformationsStep2, setStepData } from "../../store/slice/orderSlice"
+import { initInformationsStep5, setStepData, setOrderStatus, validInformations } from "../../store/slice/orderSlice"
 import Loading from "../../components/loading/loading"
 import { getStepInformations } from "../../services/orders"
-import OrderStep from "../../components/orderStep/orderStep"
 
 const Step5View = () => {
 
 
     const dispatch = useDispatch()
-    const isDataSet = useSelector((state) => state.order.isDataSet)
+    const stepValid = useSelector(state => state.order.stepValid)
     const loadForm = useSelector((state) => state.order.informations.loadForm)
     const address = useSelector((state) => state.order.informations.address)
     const city = useSelector((state) => state.order.informations.city)
     const zip = useSelector((state) => state.order.informations.zip)
     const phone = useSelector((state) => state.order.informations.phone)
     const price = useSelector((state) => state.order.informations.price)
-    const cityPrice = useSelector((state) => state.order.informations.cityPrice)
-    const isValid = (address.length > 3) && (phone.length === 14)
 
     useEffect(() => {
-        if (!isDataSet)
-            getStepInformations('step2').then(response => {
-                dispatch(initInformationsStep2(response))
-            })
-    }, [isDataSet])
-
-    const handleClick = async () => {
-        console.log("next Step")
-
+        getStepInformations('step5').then(response => {
+            dispatch(initInformationsStep5(response))
+        })
         const data = {
-            name: 'step2',
-            informations: {
-                address,
-                phone,
-                price,
-                city,
-                zip,
-                cityPrice
-            }
+            step: 5
         }
 
-        const dataNxt = {
-            name: 'step3',
-            informations: {
-                prevStepPrice: price
+        dispatch(setOrderStatus(data))
+    }, [])
+
+
+    useEffect(() => {
+
+        if (address.length > 5 && phone.length === 14 && city.length > 2 && zip.length === 5)
+            dispatch(validInformations(true))
+        else
+            if (stepValid)
+                dispatch(validInformations(false))
+
+    }, [address, phone, city, zip])
+
+
+    useEffect(() => {
+
+        if (stepValid) {
+
+            const data = {
+                name: 'step5',
+                informations: {
+                    address,
+                    phone,
+                    price,
+                    city,
+                    zip
+                }
             }
+            dispatch(setStepData(data))
         }
 
-        dispatch(setStepData(data))
-        dispatch(setStepData(dataNxt))
-    }
-
+    }, [stepValid])
 
     return (
         <>
@@ -70,7 +74,6 @@ const Step5View = () => {
                 {(loadForm) &&
                     <Loading />
                 }
-
             </div>
         </>
     )

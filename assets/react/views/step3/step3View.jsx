@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { chooseType, getMailTypes, initInformationsStep3, setStepData } from '../../store/slice/orderSlice'
+import { chooseType, getMailTypes, initInformationsStep3, setStepData,setOrderStatus } from '../../store/slice/orderSlice'
 import Loading from "../../components/loading/loading"
 import { getStepInformations } from "../../services/orders"
 import OptionLists from "../../components/optionLists/optionLists"
@@ -16,25 +16,21 @@ const Step3View = () => {
     const typeChoose = useSelector((state) => state.order.types.typeChoose)
 
     useEffect(() => {
-        if (mailTypes.length === 0)
-            dispatch(getMailTypes())
+        dispatch(getMailTypes())
+
+        getStepInformations("step3").then(response => {
+            dispatch(initInformationsStep3(response))
+        })
+        const data = {
+            step : 3
+        }
+
+        dispatch(setOrderStatus(data))
+
     }, [])
 
 
     useEffect(() => {
-            getStepInformations("step3").then(response => {
-                dispatch(initInformationsStep3(response))
-            })
-    }, [])
-
-
-    const choose = (data) => {
-        dispatch(chooseType(data))
-        uploadStep()
-    }
-
-    const uploadStep = () => {
-
         const stp3 = {
             name: 'step3',
             informations: {
@@ -53,10 +49,12 @@ const Step3View = () => {
 
         dispatch(setStepData(stp3))
         dispatch(setStepData(stp4))
+    }, [typeChoose])
+
+
+    const choose = (data) => {
+        dispatch(chooseType(data))
     }
-
-
-
 
     return (
         <>

@@ -1,47 +1,53 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { updatePdfFile, getPricePdfFile, setStepInformations } from "../../services/orders"
+import { updatePdfFile, getPricePdfFile, setStepInformations, setStatus } from "../../services/orders"
 import { getAllOptions } from "../../services/OptionsAPI"
 import { getAllMailTypes } from "../../services/mailTypesAPI"
 import { getAllBookbinding } from "../../services/bookbindingAPI"
 
 
-export const setStepData = createAsyncThunk('order/setStepData', (data) => {
-    return setStepInformations(data.name, data.informations)
+export const setStepData = createAsyncThunk('order/setStepData', async (data) => {
+    return await setStepInformations(data.name, data.informations)
 })
+
+export const setOrderStatus = createAsyncThunk('order/setOrderStatus', async (data) => {
+    return await setStatus(data)
+})
+
 
 //step1
-export const getPriceFiles = createAsyncThunk('order/getPriceFiles', () => {
-    return getPricePdfFile()
+export const getPriceFiles = createAsyncThunk('order/getPriceFiles', async () => {
+    return await getPricePdfFile()
 })
 
-export const updateFile = createAsyncThunk('order/updateFile', (data) => {
-    return updatePdfFile(data.id, data.champ, data.value, data.price)
+export const updateFile = createAsyncThunk('order/updateFile', async (data) => {
+    return await updatePdfFile(data.id, data.champ, data.value, data.price)
 })
 
 //step2
 
-export const getOptions = createAsyncThunk('order/getOptions', () => {
-    return getAllOptions()
+export const getOptions = createAsyncThunk('order/getOptions', async () => {
+    return await getAllOptions()
 })
 
 //step3
-export const getMailTypes = createAsyncThunk('order/getMailTypes', () => {
-    return getAllMailTypes()
+export const getMailTypes = createAsyncThunk('order/getMailTypes', async () => {
+    return await getAllMailTypes()
 })
 
 //step 4
 
-export const getBookbinding = createAsyncThunk('order/getBookbinding', () => {
-    return getAllBookbinding()
+export const getBookbinding = createAsyncThunk('order/getBookbinding', async () => {
+    return await getAllBookbinding()
 })
 
 export const orderSlice = createSlice({
     name: 'order',
     initialState: {
         price: 0,
+        load:true,
         isDataSet: false,
-        step: 1,
-        stepValid:false,
+        step: 0,
+        stepValid: false,
         files: {
             price: 0,
             isEmpty: true,
@@ -89,15 +95,19 @@ export const orderSlice = createSlice({
     reducers: {
 
         upStep: (state) => {
-            if(state.step < 5 )
+            if (state.step < 5)
                 state.step = state.step + 1
             state.stepValid = false
         },
 
         downStep: (state) => {
-            if(state.step > 1 )
+            if (state.step > 1)
                 state.step = state.step - 1
             state.stepValid = false
+        },
+        uploadStatus : (state,action) =>{
+            state.step=action.payload.step
+            state.load=false
         },
         //Step1
         uploadFile: (state, action) => {
@@ -114,7 +124,7 @@ export const orderSlice = createSlice({
         ,
         hasFiles: (state, action) => {
             state.files.isEmpty = action.payload
-            state.stepValid=action.payload
+            state.stepValid = action.payload
         },
 
         savePriceFiles: (state) => {
@@ -124,7 +134,7 @@ export const orderSlice = createSlice({
 
         initInformationsStep5: (state, action) => {
             state.informations.price = action.payload.prevStepPrice
-            state.price = action.payload.prevStepPrice 
+            state.price = action.payload.prevStepPrice
             state.informations.prevStepPrice = action.payload.prevStepPrice
             state.informations.address = action.payload.address ? action.payload.address : ""
             state.informations.city = action.payload.city ? action.payload.city : ""
@@ -152,7 +162,7 @@ export const orderSlice = createSlice({
             state.options.optionChoose = action.payload.optionChoose ? action.payload.optionChoose : state.options.optionChoose
             state.options.priceChoose = action.payload.priceChoose ? action.payload.priceChoose : state.options.priceChoose
             state.options.price = (action.payload.priceChoose ? action.payload.priceChoose : state.options.priceChoose) + action.payload.prevStepPrice
-            state.price=(action.payload.priceChoose ? action.payload.priceChoose : state.options.priceChoose) + action.payload.prevStepPrice
+            state.price = (action.payload.priceChoose ? action.payload.priceChoose : state.options.priceChoose) + action.payload.prevStepPrice
         },
 
         chooseOption: (state, action) => {
@@ -160,10 +170,12 @@ export const orderSlice = createSlice({
             state.options.priceChoose = action.payload.price
             state.options.price = state.options.prevStepPrice + action.payload.price
             state.price = state.options.prevStepPrice + action.payload.price
-            if (!state.options.hasChoose){
+            if (!state.options.hasChoose) {
                 state.options.hasChoose = true
-                state.step=true
+                state.stepValid = true
             }
+
+
         },
 
         //step 3
@@ -183,9 +195,9 @@ export const orderSlice = createSlice({
             state.types.price = state.types.prevStepPrice + action.payload.price
             state.price = state.types.prevStepPrice + action.payload.price
 
-            if (!state.types.hasChoose){
+            if (!state.types.hasChoose) {
                 state.types.hasChoose = true
-                state.stepValid=true
+                state.stepValid = true
             }
         },
 
@@ -208,10 +220,14 @@ export const orderSlice = createSlice({
             state.bookbinding.price = state.bookbinding.prevStepPrice + action.payload.price
             state.price = state.bookbinding.prevStepPrice + action.payload.price
 
-            if (!state.bookbinding.hasChoose){
+            if (!state.bookbinding.hasChoose) {
                 state.bookbinding.hasChoose = true
-                state.stepValid=true
+                state.stepValid = true
             }
+        },
+
+        validInformations: (state,action) => {
+            state.stepValid=action.payload
         },
 
     },
@@ -223,9 +239,10 @@ export const orderSlice = createSlice({
 
         builder.addCase(setStepData.fulfilled, (state, action) => {
             state.isDataSet = false
-            console.log('fonctionne  ---')
-            console.log(action.payload)
-            console.log('fonctionne  ---END')
+        })
+
+        builder.addCase(setOrderStatus.fulfilled, (state, action) => {
+            
         })
 
         //Step1
@@ -276,10 +293,10 @@ export const orderSlice = createSlice({
     },
 })
 
-export const { 
-    upStep,downStep,
+export const {
+    upStep, downStep,uploadStatus,
     uploadFile, isUpload, isLoading, hasFiles, savePriceFiles,
-    saveCity, saveAddress, saveZip, savePhone,
+    saveCity, saveAddress, saveZip, savePhone,validInformations,
     chooseOption, chooseType, chooseBookbinding,
     initInformationsStep2, initInformationsStep3,
     initInformationsStep4, initInformationsStep5

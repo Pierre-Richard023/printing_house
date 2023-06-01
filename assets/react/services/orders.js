@@ -4,6 +4,7 @@ import { pdfjs } from "react-pdf";
 const db = new Dexie("OrderStepsDatabase");
 
 db.version(1).stores({
+    status: "id",
     step1: "id",
     step2: "id",
     step3: "id",
@@ -120,7 +121,7 @@ export const clearFilesTable = async () => {
  * ALL
  */
 
-export const setStepInformations = async (name ,newData) => {
+export const setStepInformations = async (name, newData) => {
     const existingInformation = await db.table(name).get(1);
 
     if (existingInformation)
@@ -131,15 +132,34 @@ export const setStepInformations = async (name ,newData) => {
 };
 
 export const getStepInformations = async (name) => {
-    return await db.table(name).get(1).then(res => res )
+    return await db.table(name).get(1).then(res => res)
+}
+
+export const getStatus = async () => {
+
+    const status = await db.table("status").get(1);
+
+    const data = {
+        step: 1
+    }
+
+    if (!status)
+        await db.table("status").add({ ...data, id: 1 });
+
+    return await db.table("status").get(1);
+}
+
+export const setStatus = async (data) => {
+
+    await db.table("status").update(1, data)
 }
 
 
 export const deleteAllTable = () => {
-    
+
     db.delete().then(() => {
         console.log('Toutes les tables ont été supprimées avec succès.');
-      }).catch((error) => {
+    }).catch((error) => {
         console.error('Une erreur s\'est produite lors de la suppression des tables :', error);
-      });
+    });
 }

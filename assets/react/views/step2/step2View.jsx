@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { initInformationsStep2, setStepData, getOptions, chooseOption } from '../../store/slice/orderSlice'
+import { initInformationsStep2, setStepData, getOptions, chooseOption, setOrderStatus } from '../../store/slice/orderSlice'
 import Loading from "../../components/loading/loading"
 import { getStepInformations } from "../../services/orders"
 import OptionLists from "../../components/optionLists/optionLists"
@@ -16,63 +16,47 @@ const Step2View = () => {
     const loadOptions = useSelector((state) => state.order.options.loadOptions)
 
     useEffect(() => {
-        if (options.length === 0)
-            dispatch(getOptions())
+        dispatch(getOptions())
 
         getStepInformations("step2").then(response => {
             dispatch(initInformationsStep2(response))
         })
 
-        console.log('step 2 ')
+        const data = {
+            step : 2
+        }
+
+        dispatch(setOrderStatus(data))
+
     }, [])
 
-    const choose = (data) => {
+    useEffect(() =>{
+
+        const stp2 = {
+            name: 'step2',
+            informations: {
+                optionChoose,
+                priceChoose,
+                hasChoose,
+            }
+        }
+
+        const stp3 = {
+            name: 'step3',
+            informations: {
+                prevStepPrice: price
+            }
+        }
+
+        dispatch(setStepData(stp2))
+        dispatch(setStepData(stp3))
+
+    },[optionChoose])
+
+    const chooseOpt = (data) => {
         dispatch(chooseOption(data))
 
-        const stp2 = {
-            name: 'step2',
-            informations: {
-                optionChoose,
-                priceChoose,
-                hasChoose,
-            }
-        }
-
-        const stp3 = {
-            name: 'step3',
-            informations: {
-                prevStepPrice: price
-            }
-        }
-
-        dispatch(setStepData(stp2))
-        dispatch(setStepData(stp3))
-
     }
-
-    const uploadStep = () => {
-
-        const stp2 = {
-            name: 'step2',
-            informations: {
-                optionChoose,
-                priceChoose,
-                hasChoose,
-            }
-        }
-
-        const stp3 = {
-            name: 'step3',
-            informations: {
-                prevStepPrice: price
-            }
-        }
-
-        dispatch(setStepData(stp2))
-        dispatch(setStepData(stp3))
-    }
-
-
 
 
     return (
@@ -85,7 +69,7 @@ const Step2View = () => {
             <div className="py-4">
 
                 {(!loadOptions) &&
-                    <OptionLists lists={options} choose={choose} optionChoose={optionChoose} />
+                    <OptionLists lists={options} choose={chooseOpt} optionChoose={optionChoose} />
                 }
 
                 {(loadOptions) &&

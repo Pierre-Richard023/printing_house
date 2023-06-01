@@ -33,7 +33,6 @@ const Phone = () => {
 
     }
 
-
     const changeFormat = (evt) => {
         const value = evt.target.value
         const num = formatPhoneNumber(value)
@@ -43,25 +42,31 @@ const Phone = () => {
 
     return (
 
-            <div className="col-span-full">
-                <label htmlFor="phone" className="text-sm">Téléphone</label>
-                <input  className="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 border-gray-700 text-gray-900" 
-                        type="tel" id="phone" placeholder="0694 012345" maxLength={14}
-                        value={phone}
-                        onChange={(e) => changeFormat(e)}
-                        onKeyDown={(event) => {
-                            if ( !/[0-9]/.test(event.key) ) {
-                                if(event.code == 'Backspace'){
-                                    const ph=phone.trimEnd()
-                                    dispatch(savePhone(ph.slice(0,-1)))
-                                }
-                                event.preventDefault();
+        <>
+            <div className="relative">
+                <input type="tel" id="phone" maxLength={14}
+                    className="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+                    placeholder=" " value={phone}
+                    onChange={(e) => changeFormat(e)}
+                    onKeyDown={(event) => {
+                        if (!/[0-9]/.test(event.key)) {
+                            if (event.code == 'Backspace') {
+                                const ph = phone.trimEnd()
+                                dispatch(savePhone(ph.slice(0, -1)))
                             }
+                            event.preventDefault();
+                        }
 
-                        }}
+                    }}
                 />
+                <label
+                    htmlFor="phone"
+                    className="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-secondary  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
+                >
+                    Téléphone
+                </label>
             </div>
-
+        </>
     )
 }
 
