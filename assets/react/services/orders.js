@@ -155,6 +155,29 @@ export const setStatus = async (data) => {
 }
 
 
+export const getAllDBInformations = async () => {
+
+    return await db.transaction('r', db.table("status"), db.table("step1"), db.table("step2"), db.table("step3"), db.table("step4"), db.table("step5"), async () => {
+        const step1 = await db.table("step1").toArray()
+        const step2 = await db.table("step2").toArray()
+        const step3 = await db.table("step3").toArray()
+        const step4 = await db.table("step4").toArray()
+        const step5 = await db.table("step5").toArray()
+        const status = await db.table("status").toArray()
+
+        return {
+            step1,
+            step2,
+            step3,
+            step4,
+            step5,
+            status,
+        }
+    })
+
+}
+
+
 export const deleteAllTable = () => {
 
     db.delete().then(() => {
@@ -162,4 +185,44 @@ export const deleteAllTable = () => {
     }).catch((error) => {
         console.error('Une erreur s\'est produite lors de la suppression des tables :', error);
     });
+}
+
+
+//
+
+export const OrderFillForm = async () => {
+
+    let files
+    let options = []
+
+    await getPdfFiles().then((res)=>{
+        files=res
+    })
+
+    const dataTransfer=new DataTransfer()
+
+    for(let file of files )
+    {
+        await dataTransfer.items.add(file.file);
+        let option={
+            amount:file.amount,
+            both_sides:file.both_sides,
+            color:file.color,
+            reliure : file.reliure,
+            price:file.starting_price
+        }
+        await options.push(option)
+    }
+
+    const filesForm =document.querySelector('#orders_files')
+    const addressForm=document.querySelector('#orders_address')
+    const cityForm=document.querySelector('#orders_city')
+    const zipForm=document.querySelector('#orders_zip')
+    const priceForm=document.querySelector('#orders_price')
+    const statusForm=document.querySelector('#orders_status')
+    const stateForm=document.querySelector('#orders_state')
+    const phoneForm=document.querySelector('#orders_phone')
+    const optionsForm=document.querySelector('#orders_optionsFiles')
+    const sendOptionForm=document.querySelector('#orders_option') 
+
 }

@@ -11,16 +11,17 @@ const Step2View = () => {
     const options = useSelector((state) => state.order.options.options)
     const hasChoose = useSelector((state) => state.order.options.hasChoose)
     const optionChoose = useSelector((state) => state.order.options.optionChoose)
-    const priceChoose = useSelector((state) => state.order.options.priceChoose)
     const price = useSelector((state) => state.order.options.price)
     const loadOptions = useSelector((state) => state.order.options.loadOptions)
 
     useEffect(() => {
         dispatch(getOptions())
 
-        getStepInformations("step2").then(response => {
+        getStepInformations("step2")
+        .then(response => {
             dispatch(initInformationsStep2(response))
         })
+        .catch(error => console.error(error))
 
         const data = {
             step : 2
@@ -36,7 +37,6 @@ const Step2View = () => {
             name: 'step2',
             informations: {
                 optionChoose,
-                priceChoose,
                 hasChoose,
             }
         }
@@ -47,7 +47,6 @@ const Step2View = () => {
                 prevStepPrice: price
             }
         }
-
         dispatch(setStepData(stp2))
         dispatch(setStepData(stp3))
 

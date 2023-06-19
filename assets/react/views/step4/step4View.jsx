@@ -11,7 +11,6 @@ const Step4View = () => {
     const hasChoose = useSelector((state) => state.order.bookbinding.hasChoose)
     const bookbinding = useSelector((state) => state.order.bookbinding.bookbinding)
     const bookbindingChoose = useSelector((state) => state.order.bookbinding.bookbindingChoose)
-    const priceChoose = useSelector((state) => state.order.bookbinding.priceChoose)
     const price = useSelector((state) => state.order.bookbinding.price)
     const loadOptions = useSelector((state) => state.order.bookbinding.load)
 
@@ -34,7 +33,6 @@ const Step4View = () => {
             name: 'step4',
             informations: {
                 bookbindingChoose,
-                priceChoose,
                 hasChoose,
             }
         }

@@ -11,7 +11,6 @@ const Step3View = () => {
     const hasChoose = useSelector((state) => state.order.types.hasChoose)
     const mailTypes = useSelector((state) => state.order.types.types)
     const price = useSelector((state) => state.order.types.price)
-    const priceChoose = useSelector((state) => state.order.types.priceChoose)
     const loadOptions = useSelector((state) => state.order.types.load)
     const typeChoose = useSelector((state) => state.order.types.typeChoose)
 
@@ -35,7 +34,6 @@ const Step3View = () => {
             name: 'step3',
             informations: {
                 typeChoose,
-                priceChoose,
                 hasChoose,
             }
         }

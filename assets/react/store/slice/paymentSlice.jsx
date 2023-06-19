@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { getAllDBInformations } from "../../request/orderRequest"
+import { getAllDBInformations } from "../../services/orders"
 
-export const getIntentKey = createAsyncThunk('step4/getIntentKey',(price)=>{
+export const getIntentKey = createAsyncThunk('payment/getIntentKey',(price)=>{
     return fetch('/paymentIntent-key',
     {
         method: "POST",
@@ -11,7 +11,8 @@ export const getIntentKey = createAsyncThunk('step4/getIntentKey',(price)=>{
     .then( res => res.json())
 })
 
-export const getAllInformation = createAsyncThunk('step4/getAllInformation',()=>{
+
+export const getOrderInformations = createAsyncThunk('payment/getOrderInformations',()=>{
     return getAllDBInformations()
 })
 
@@ -25,7 +26,6 @@ export const paymentSlice = createSlice({
         informations: {},
         secretKey:"",
         secretKeyLoad:false,
-        today:"",
     },
     reducers: {
         setName: (state,action) =>{
@@ -39,12 +39,13 @@ export const paymentSlice = createSlice({
             state.secretKeyLoad = true
         })
 
-        builder.addCase(getAllInformation.fulfilled, (state, action) => {
-            const d = new Date()
-            state.today=d.toLocaleDateString()
-
-            state.informations = action.payload
+        builder.addCase(getOrderInformations.pending , (state, action) => {
             state.loadInformation = true
+        })
+
+        builder.addCase(getOrderInformations.fulfilled, (state, action) => {
+            state.informations = action.payload
+            state.loadInformation = false
         })
         
 

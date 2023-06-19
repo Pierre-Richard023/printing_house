@@ -55,7 +55,7 @@ const OrderBottom = () => {
                             </button>
                         }
                         {
-                            (step > 1 && step < 5)
+                            ( step < 5)
                             &&
                             <button type="button"
                                 className={`px-8 py-3 font-semibold rounded-full  ${stepValid ? " bg-primary text-white" : " bg-gray-400 cursor-not-allowed"} `}

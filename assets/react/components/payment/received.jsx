@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { getPdfFiles } from "../../request/orderRequest"
-import { getAllInformation } from "../../store/slice/paymentSlice"
-
 
 const Received = () => {
 
@@ -17,7 +15,6 @@ const Received = () => {
 
     useEffect(() => {
         getPdfFiles().then(res => setFiles(res))
-        dispatch(getAllInformation())
     }, [])
 
 

@@ -44,7 +44,7 @@ export const orderSlice = createSlice({
     name: 'order',
     initialState: {
         price: 0,
-        load:true,
+        load: true,
         isDataSet: false,
         step: 0,
         stepValid: false,
@@ -70,7 +70,7 @@ export const orderSlice = createSlice({
             hasChoose: false,
             loadOptions: false,
             options: [],
-            optionChoose: "",
+            optionChoose: {},
             priceChoose: 0
         },
         types: {
@@ -79,7 +79,7 @@ export const orderSlice = createSlice({
             prevStepPrice: 0,
             hasChoose: false,
             types: [],
-            typeChoose: "",
+            typeChoose: {},
             priceChoose: 0
         },
         bookbinding: {
@@ -88,8 +88,7 @@ export const orderSlice = createSlice({
             prevStepPrice: 0,
             hasChoose: false,
             bookbinding: [],
-            bookbindingChoose: "",
-            priceChoose: 0
+            bookbindingChoose: {},
         }
     },
     reducers: {
@@ -105,9 +104,9 @@ export const orderSlice = createSlice({
                 state.step = state.step - 1
             state.stepValid = false
         },
-        uploadStatus : (state,action) =>{
-            state.step=action.payload.step
-            state.load=false
+        uploadStatus: (state, action) => {
+            state.step = action.payload.step
+            state.load = false
         },
         //Step1
         uploadFile: (state, action) => {
@@ -160,38 +159,33 @@ export const orderSlice = createSlice({
             state.options.hasChoose = action.payload.hasChoose ? action.payload.hasChoose : state.options.hasChoose
             state.stepValid = action.payload.hasChoose ? action.payload.hasChoose : state.options.hasChoose
             state.options.optionChoose = action.payload.optionChoose ? action.payload.optionChoose : state.options.optionChoose
-            state.options.priceChoose = action.payload.priceChoose ? action.payload.priceChoose : state.options.priceChoose
-            state.options.price = (action.payload.priceChoose ? action.payload.priceChoose : state.options.priceChoose) + action.payload.prevStepPrice
-            state.price = (action.payload.priceChoose ? action.payload.priceChoose : state.options.priceChoose) + action.payload.prevStepPrice
+            state.options.price = ((action.payload.optionChoose != null && Object.keys(action.payload.optionChoose).length > 0) ? action.payload.optionChoose.price : 0) + action.payload.prevStepPrice
+            state.price = ((action.payload.optionChoose != null && Object.keys(action.payload.optionChoose).length > 0) ? action.payload.optionChoose.price : 0) + action.payload.prevStepPrice
         },
 
         chooseOption: (state, action) => {
-            state.options.optionChoose = action.payload.id
-            state.options.priceChoose = action.payload.price
+            state.options.optionChoose = action.payload
             state.options.price = state.options.prevStepPrice + action.payload.price
             state.price = state.options.prevStepPrice + action.payload.price
             if (!state.options.hasChoose) {
                 state.options.hasChoose = true
                 state.stepValid = true
             }
-
-
         },
 
         //step 3
         initInformationsStep3: (state, action) => {
+
             state.types.prevStepPrice = action.payload.prevStepPrice
             state.types.hasChoose = action.payload.hasChoose ? action.payload.hasChoose : state.types.hasChoose
             state.stepValid = action.payload.hasChoose ? action.payload.hasChoose : state.types.hasChoose
             state.types.typeChoose = action.payload.typeChoose ? action.payload.typeChoose : state.types.typeChoose
-            state.types.priceChoose = action.payload.priceChoose ? action.payload.priceChoose : state.types.priceChoose
-            state.types.price = (action.payload.priceChoose ? action.payload.priceChoose : state.types.priceChoose) + action.payload.prevStepPrice
-            state.price = (action.payload.priceChoose ? action.payload.priceChoose : state.types.priceChoose) + action.payload.prevStepPrice
+            state.types.price = ((action.payload.typeChoose != null && Object.keys(action.payload.typeChoose).length > 0) ? action.payload.typeChoose.price : 0) + action.payload.prevStepPrice
+            state.price = ((action.payload.typeChoose != null && Object.keys(action.payload.typeChoose).length > 0) ? action.payload.typeChoose.price : 0) + action.payload.prevStepPrice
         },
 
         chooseType: (state, action) => {
-            state.types.typeChoose = action.payload.id
-            state.types.priceChoose = action.payload.price
+            state.types.typeChoose = action.payload
             state.types.price = state.types.prevStepPrice + action.payload.price
             state.price = state.types.prevStepPrice + action.payload.price
 
@@ -208,15 +202,13 @@ export const orderSlice = createSlice({
             state.bookbinding.hasChoose = action.payload.hasChoose ? action.payload.hasChoose : state.bookbinding.hasChoose
             state.stepValid = action.payload.hasChoose ? action.payload.hasChoose : state.bookbinding.hasChoose
             state.bookbinding.bookbindingChoose = action.payload.bookbindingChoose ? action.payload.bookbindingChoose : state.bookbinding.bookbindingChoose
-            state.bookbinding.priceChoose = action.payload.priceChoose ? action.payload.priceChoose : state.bookbinding.priceChoose
-            state.bookbinding.price = (action.payload.priceChoose ? action.payload.priceChoose : state.bookbinding.priceChoose) + action.payload.prevStepPrice
-            state.price = (action.payload.priceChoose ? action.payload.priceChoose : state.bookbinding.priceChoose) + action.payload.prevStepPrice
+            state.bookbinding.price = ((action.payload.bookbindingChoose != null && Object.keys(action.payload.bookbindingChoose).length > 0) ? action.payload.bookbindingChoose.price : 0) + action.payload.prevStepPrice
+            state.price = ((action.payload.bookbindingChoose != null && Object.keys(action.payload.bookbindingChoose).length > 0) ? action.payload.bookbindingChoose.price : 0) + action.payload.prevStepPrice
 
         },
 
         chooseBookbinding: (state, action) => {
-            state.bookbinding.bookbindingChoose = action.payload.id
-            state.bookbinding.priceChoose = action.payload.price
+            state.bookbinding.bookbindingChoose = action.payload
             state.bookbinding.price = state.bookbinding.prevStepPrice + action.payload.price
             state.price = state.bookbinding.prevStepPrice + action.payload.price
 
@@ -226,8 +218,8 @@ export const orderSlice = createSlice({
             }
         },
 
-        validInformations: (state,action) => {
-            state.stepValid=action.payload
+        validInformations: (state, action) => {
+            state.stepValid = action.payload
         },
 
     },
@@ -242,7 +234,7 @@ export const orderSlice = createSlice({
         })
 
         builder.addCase(setOrderStatus.fulfilled, (state, action) => {
-            
+
         })
 
         //Step1
@@ -294,9 +286,9 @@ export const orderSlice = createSlice({
 })
 
 export const {
-    upStep, downStep,uploadStatus,
+    upStep, downStep, uploadStatus,
     uploadFile, isUpload, isLoading, hasFiles, savePriceFiles,
-    saveCity, saveAddress, saveZip, savePhone,validInformations,
+    saveCity, saveAddress, saveZip, savePhone, validInformations,
     chooseOption, chooseType, chooseBookbinding,
     initInformationsStep2, initInformationsStep3,
     initInformationsStep4, initInformationsStep5

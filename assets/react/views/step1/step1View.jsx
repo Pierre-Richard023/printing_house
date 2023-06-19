@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { getPriceFiles, setStepData } from "../../store/slice/orderSlice"
+import { getPriceFiles, setStepData ,setOrderStatus} from "../../store/slice/orderSlice"
 import Files from "../../components/step1/files"
 import Upload from "../../components/step1/Upload"
 
@@ -11,6 +11,14 @@ const Step1View = () => {
 
     useEffect(() => {
         dispatch(getPriceFiles())
+
+
+        const data = {
+            step : 1
+        }
+
+        dispatch(setOrderStatus(data))
+
     }, [])
 
 
