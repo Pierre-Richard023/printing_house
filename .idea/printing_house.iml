@@ -156,6 +156,9 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/paragonie/random_compat" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/twig/intl-extra" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/setasign/fpdi" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/jms/metadata" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/workflow" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/vich/uploader-bundle" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
