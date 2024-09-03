@@ -2,7 +2,8 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
 use App\Repository\OptionsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -15,8 +16,21 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\Entity(repositoryClass: OptionsRepository::class)]
 #[Vich\Uploadable]
 #[ApiResource(
-    collectionOperations: ['get' => ['normalization_context' => ['groups' => 'options:list']]],
-    itemOperations: ['get' => ['normalization_context' => ['groups' => 'options:item']]],
+
+    operations: [
+        new Get(
+            uriTemplate: '/options',
+            normalizationContext: ['groups' => 'options:list']
+        ),
+        new Get(
+            uriTemplate: '/options/{id}',
+            normalizationContext: ['groups' => 'options:item']
+        )
+    ],
+
+
+    // collectionOperations: ['get' => ['normalization_context' => ['groups' => 'options:list']]],
+    // itemOperations: ['get' => ['normalization_context' => ['groups' => 'options:item']]],
     order: ['name' => 'ASC'],
     paginationEnabled: false,
 )]
@@ -52,7 +66,7 @@ class Options
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
-    
+
 
     public function __construct()
     {
@@ -155,5 +169,4 @@ class Options
     {
         return $this->imageName;
     }
-
 }

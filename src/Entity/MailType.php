@@ -2,7 +2,8 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
 use App\Repository\MailTypeRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -12,8 +13,20 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\Entity(repositoryClass: MailTypeRepository::class)]
 #[Vich\Uploadable]
 #[ApiResource(
-    collectionOperations: ['get' => ['normalization_context' => ['groups' => 'mailType:list']]],
-    itemOperations: ['get' => ['normalization_context' => ['groups' => 'mailType:item']]],
+
+    operations: [
+        new Get(
+            normalizationContext: ['groups' => 'mailType:list'],
+            uriTemplate: '/mail_types'
+        ),
+        new Get(
+            normalizationContext: ['groups' => 'mailType:item'],
+            uriTemplate: '/mail_types/{id}'
+        )
+    ],
+
+    // collectionOperations: ['get' => ['normalization_context' => ['groups' => 'mailType:list']]],
+    // itemOperations: ['get' => ['normalization_context' => ['groups' => 'mailType:item']]],
     order: ['name' => 'ASC'],
     paginationEnabled: false,
 )]

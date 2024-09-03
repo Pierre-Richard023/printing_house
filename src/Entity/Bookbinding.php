@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-// use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
 use App\Repository\BookbindingRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -13,8 +13,17 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\Entity(repositoryClass: BookbindingRepository::class)]
 #[Vich\Uploadable]
 #[ApiResource(
-    collectionOperations: ['get' => ['normalization_context' => ['groups' => 'bookbinding:list']]],
-    itemOperations: ['get' => ['normalization_context' => ['groups' => 'bookbinding:item']]],
+    operations: [
+        new Get(
+            normalizationContext: ['groups' => 'bookbinding:list']
+        ),
+        new Get(
+            uriTemplate: '/bookbindings/{id}',
+            normalizationContext: ['groups' => 'bookbinding:item']
+        )
+    ],
+    // collectionOperations: ['get' => ['normalization_context' => ['groups' => 'bookbinding:list']]],
+    // itemOperations: ['get' => ['normalization_context' => ['groups' => 'bookbinding:item']]],
     order: ['name' => 'ASC'],
     paginationEnabled: false,
 )]
@@ -99,5 +108,4 @@ class Bookbinding
     {
         return $this->imageName;
     }
-
 }
