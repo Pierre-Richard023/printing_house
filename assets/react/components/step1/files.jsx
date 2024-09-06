@@ -41,7 +41,7 @@ const Files = () => {
     }
 
     return (
-        <div className='md:grid md:grid-cols-4 gap-6 py-4'>
+        <div className='flex gap-6 p-4'>
             {files.map((val, i) => <File key={i} data={val} delFile={delFile} />)}
         </div>
     )

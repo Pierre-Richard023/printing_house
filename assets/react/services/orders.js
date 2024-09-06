@@ -27,7 +27,7 @@ export const savePdfFile = async (file) => {
             const fr = new FileReader();
 
             fr.onload = () => {
-                pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+                pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.mjs`;
                 const typedarray = new Uint8Array(fr.result);
 
                 pdfjs.getDocument(typedarray).promise.then(async (pdf) => {
