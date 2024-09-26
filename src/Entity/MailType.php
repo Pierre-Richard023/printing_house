@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\MailTypeRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -15,18 +16,15 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ApiResource(
 
     operations: [
-        new Get(
-            normalizationContext: ['groups' => 'mailType:list'],
-            uriTemplate: '/mail_types'
+        new GetCollection(
+            uriTemplate: '/mailTypes',
+            normalizationContext: ['groups' => 'mailType:list']
         ),
         new Get(
-            normalizationContext: ['groups' => 'mailType:item'],
-            uriTemplate: '/mail_types/{id}'
+            uriTemplate: '/mailTypes/{id}',
+            normalizationContext: ['groups' => 'mailType:item']
         )
     ],
-
-    // collectionOperations: ['get' => ['normalization_context' => ['groups' => 'mailType:list']]],
-    // itemOperations: ['get' => ['normalization_context' => ['groups' => 'mailType:item']]],
     order: ['name' => 'ASC'],
     paginationEnabled: false,
 )]
@@ -110,5 +108,15 @@ class MailType
     public function getImageName(): ?string
     {
         return $this->imageName;
+    }
+
+    #[Groups(['mailType:list', 'mailType:item'])]
+    public function getImageUrl(): ?string
+    {
+        if ($this->imageName) {
+            return '/images/mailTypes/' . $this->imageName;
+        }
+
+        return null;
     }
 }

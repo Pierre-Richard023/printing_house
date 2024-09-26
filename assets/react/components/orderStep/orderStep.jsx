@@ -39,7 +39,7 @@ const OrderStep = () => {
         {stepTitles.map((value, key) => (
           <li
             key={key}
-            className={`flex items-center ${
+            className={`flex items-center gap-2 ${
               value.step == step
                 ? "text-secondary"
                 : value.step < step

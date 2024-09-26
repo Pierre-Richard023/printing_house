@@ -8,7 +8,7 @@ const OrderController = () => {
     return (
         <>
             <Provider store={store} >
-                <div className="py-2 px-8">
+                <div className="py-2 px-2 md:px-8">
                     <Main />
                 </div>
             </Provider>

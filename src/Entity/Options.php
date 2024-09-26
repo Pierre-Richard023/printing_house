@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\OptionsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -16,9 +17,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\Entity(repositoryClass: OptionsRepository::class)]
 #[Vich\Uploadable]
 #[ApiResource(
-
     operations: [
-        new Get(
+        new GetCollection(
             uriTemplate: '/options',
             normalizationContext: ['groups' => 'options:list']
         ),
@@ -27,10 +27,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
             normalizationContext: ['groups' => 'options:item']
         )
     ],
-
-
-    // collectionOperations: ['get' => ['normalization_context' => ['groups' => 'options:list']]],
-    // itemOperations: ['get' => ['normalization_context' => ['groups' => 'options:item']]],
     order: ['name' => 'ASC'],
     paginationEnabled: false,
 )]
@@ -168,5 +164,15 @@ class Options
     public function getImageName(): ?string
     {
         return $this->imageName;
+    }
+
+    #[Groups(['options:list', 'options:item'])]
+    public function getImageUrl(): ?string
+    {
+        if ($this->imageName) {
+            return '/images/options/' . $this->imageName;
+        }
+
+        return null;
     }
 }

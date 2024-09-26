@@ -164,6 +164,7 @@ export const orderSlice = createSlice({
         },
 
         chooseOption: (state, action) => {
+            console.log(action.payload)
             state.options.optionChoose = action.payload
             state.options.price = state.options.prevStepPrice + action.payload.price
             state.price = state.options.prevStepPrice + action.payload.price

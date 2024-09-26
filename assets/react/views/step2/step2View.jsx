@@ -54,7 +54,6 @@ const Step2View = () => {
 
     const chooseOpt = (data) => {
         dispatch(chooseOption(data))
-
     }
 
 
